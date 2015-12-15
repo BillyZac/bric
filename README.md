@@ -3,7 +3,7 @@ Makes several bricks in various purple-friendly, yet earthy, earthy colors.
 
 ## Installation
 
-```npm install```
+```npm install bric```
 
 You also need to install Cairo, as brick depends on it.
 To install on OS X:
