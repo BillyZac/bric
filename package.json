@@ -1,0 +1,15 @@
+{
+  "name": "node-canvas-demo",
+  "version": "0.0.1",
+  "description": "If you're looking for a brick maker, look no further.",
+  "main": "brick.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "billyzac",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^1.3.5",
+    "fs": "0.0.2"
+  }
+}
