@@ -1,4 +1,4 @@
-# brick
+# bric
 Makes several bricks in various purple-friendly, yet earthy, earthy colors.
 
 ## Installation
@@ -17,16 +17,18 @@ For other systems, see [Cairo's download page](http://cairographics.org/download
 Put the following into a separate .js file, such as "app.js".
 
 ```
-var brick = require('./brick')
+var bric = require('bric')
 
 var width = 200
 var height = 50
 
-brick(width, height)
+bric(width, height)
 ```
+
+In the same folder as app.js, make a folder called "bricks". This is where your bricks will go.
 
 Then, on the command line, run:
 
 ```$ node app.js```
 
-This will give you bricks that are 200 pixels wide by 50 pixels tall. They show up in the "bricks" folder.
+Check the "bricks" folder. You should have a bunch of bricks that are 200 pixels wide by 50 pixels tall.
