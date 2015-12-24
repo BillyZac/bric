@@ -23,11 +23,18 @@ function brick(width, height) {
   ctx = canvas.getContext('2d');
 
   for (var i=0; i < palette.length; i++) {
-    ctx.fillStyle = palette[i];
+    // Draw dark background, which will appear as a 2 px border.
+    ctx.fillStyle = palette[1]; // A dark purple
     ctx.beginPath();
     ctx.rect(0, 0, width, height);
     ctx.fill();
-    fs.writeFile('./bricks/out-' + timeStamp + '-' + palette[i] + '.png', canvas.toBuffer());
+    
+    // Draw the interior, pulling colors from the palette specified above.
+    ctx.fillStyle = palette[i];
+    ctx.beginPath();
+    // By making this one 2px smaller than the border color, the brick gets a border.
+    ctx.rect(2, 2, width-4, height-4);
+    ctx.fill();
+    fs.writeFile('./bricks/brick-' + width + 'px-' + height + 'px-' + palette[i] + '.png', canvas.toBuffer());
   }
-
 }
