@@ -19,6 +19,7 @@ var paletteHSLA = [
 function brick(width, height) {
   var canvas = new Canvas(width, height, 'png');
   var timeStamp = Date.now()
+  var grainDimension = 10
 
   ctx = canvas.getContext('2d');
 
@@ -33,19 +34,23 @@ function brick(width, height) {
     ctx.fillStyle = paletteHSLA[i];
     ctx.beginPath();
     // By making this one 2px smaller than the border color, the brick gets a border.
-    ctx.rect(2, 2, width-4, height-4);
+    ctx.rect(
+      grainDimension,
+      grainDimension,
+      width - grainDimension * 2,
+      height - grainDimension * 2);
     ctx.fill();
 
-    addNoise(width, height)
+    addNoise(width, height, grainDimension)
 
     fs.writeFile('./bricks/brick-' + width + 'px-' + height + 'px-' + paletteHSLA[i] + '.png', canvas.toBuffer());
   }
 }
 
-function addNoise(width, height) {
+function addNoise(width, height, grainDimension) {
   for (var i=0; i<50; i++) {
     // Each noise grain is 10px by 10px
-    var grainDimension = 10
+
     // Find a random spot on the canvas.
     // Make sure it's on a 10px grid, i.e. x = 60, not x = 62
     var x = Math.floor(Math.random() * width / grainDimension) * grainDimension
