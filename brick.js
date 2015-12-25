@@ -19,45 +19,45 @@ var paletteHSLA = [
 function brick(width, height) {
   var canvas = new Canvas(width, height, 'png');
   var timeStamp = Date.now()
+
+  // Each noise grain is 10px by 10px
   var grainDimension = 10
 
   ctx = canvas.getContext('2d');
 
-  for (var i=0; i < paletteHSLA.length; i++) {
-    // Draw dark background, which will appear as a 2 px border.
-    ctx.fillStyle = paletteHSLA[1]; // A dark purple
-    ctx.beginPath();
-    ctx.rect(0, 0, width, height);
-    ctx.fill();
+  // Draw dark background, which will appear as a 2 px border.
+  ctx.fillStyle = paletteHSLA[1]; // A dark purple
+  ctx.beginPath();
+  ctx.rect(0, 0, width, height);
+  ctx.fill();
 
-    // Draw the interior, pulling colors from the palette specified above.
-    ctx.fillStyle = paletteHSLA[i];
-    ctx.beginPath();
-    // By making this one 2px smaller than the border color, the brick gets a border.
-    ctx.rect(
-      grainDimension,
-      grainDimension,
-      width - grainDimension * 2,
-      height - grainDimension * 2);
-    ctx.fill();
+  // Draw the interior
+  // Pick a random color from the palette specified above.
+  var brickColor = randomColor(paletteHSLA)
+  ctx.fillStyle = brickColor
+  ctx.beginPath();
+  // By making this one 2px smaller than the border color, the brick gets a border.
+  ctx.rect(
+    grainDimension,
+    grainDimension,
+    width - grainDimension * 2,
+    height - grainDimension * 2);
+  ctx.fill();
 
-    addNoise(width, height, grainDimension)
+  addNoise(width, height, grainDimension)
 
-    fs.writeFile('./bricks/brick-' + width + 'px-' + height + 'px-' + paletteHSLA[i] + '.png', canvas.toBuffer());
-  }
+  fs.writeFile('./bricks/brick-' + width + 'px-' + height + 'px-' + brickColor + '.png', canvas.toBuffer());
 }
 
 function addNoise(width, height, grainDimension) {
   for (var i=0; i<50; i++) {
-    // Each noise grain is 10px by 10px
-
     // Find a random spot on the canvas.
     // Make sure it's on a 10px grid, i.e. x = 60, not x = 62
     var x = Math.floor(Math.random() * width / grainDimension) * grainDimension
     var y = Math.floor(Math.random() * height / grainDimension) * grainDimension
     // Choose a color at random from our palette
-    var paletteIndex = Math.floor(Math.random() * paletteHSLA.length)
-    ctx.fillStyle = paletteHSLA[paletteIndex]
+    // var paletteIndex = Math.floor(Math.random() * paletteHSLA.length)
+    ctx.fillStyle = randomColor(paletteHSLA)
     // Tone down the opacity of the grain
     ctx.globalAlpha = 0.15
     ctx.beginPath()
@@ -67,4 +67,11 @@ function addNoise(width, height, grainDimension) {
   // Reset the opacity.
   // This isn't necessary as long as the palette specifies in hsla, but just to be on the safe side.
   ctx.globalAlpha = 0.15
+}
+
+// Given an array of colors,
+// return one at random (returns an hsla string)
+function randomColor(palette) {
+  var index = Math.floor(Math.random() * palette.length)
+  return palette[index]
 }

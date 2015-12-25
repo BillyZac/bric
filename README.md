@@ -1,5 +1,5 @@
 # bric
-Makes several bricks in various purple-friendly, yet earthy, earthy colors.
+Makes a brick in one of several purple-friendly, yet earthy, earthy colors.
 
 ## Installation
 
